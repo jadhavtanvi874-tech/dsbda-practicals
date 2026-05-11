@@ -1,0 +1,61 @@
+STEP 1: Create Salesforce Developer Account
+https://developer.salesforce.com/signup
+
+STEP 2: Create Lightning App
+Setup → App Manager → New Lightning App
+Name: Library Management System
+Add Tabs: Book, Student, Issue Book
+
+STEP 3: Create Objects
+1. Book
+2. Student
+3. Issue Book
+
+STEP 4: Book Fields
+- Book Name (Text)
+- Author (Text)
+- Category (Picklist)
+- Available (Checkbox)
+
+STEP 5: Student Fields
+- Student Name (Text)
+- Roll No (Number)
+- Email (Email)
+- Phone (Phone)
+
+STEP 6: Issue Book Fields
+- Issue Date (Date)
+- Return Date (Date)
+- Status (Picklist: Issued, Returned, Late)
+
+STEP 7: Relationships
+Issue Book → Lookup to Student
+Issue Book → Lookup to Book
+
+STEP 8: Flow Automation
+If Book Issued:
+→ Available = FALSE
+
+If Book Returned:
+→ Available = TRUE
+
+STEP 9: Validation Rule
+If Available = FALSE
+→ Cannot issue book
+
+STEP 10: Currency Formula (FINE CALCULATION)
+Fine = IF(TODAY() > Return_Date__c,
+(TODAY() - Return_Date__c) * 10,
+0)
+
+Meaning:
+₹10 per late day
+
+STEP 11: Reports
+- Total Books
+- Issued Books
+- Late Returns
+
+STEP 12: Dashboard
+- Pie chart (Available vs Issued)
+- Bar chart (Students vs Books issued)
