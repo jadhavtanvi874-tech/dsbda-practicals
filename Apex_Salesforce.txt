@@ -1,0 +1,209 @@
+-----------apex class:CalculatorController----------
+
+public class CalculatorController {
+
+    public Decimal num1 {get; set;}
+    public Decimal num2 {get; set;}
+    public Decimal result {get; set;}
+
+    public CalculatorController() {
+        result = 0;
+    }
+
+    public void add() {
+        result = num1 + num2;
+    }
+
+    public void subtract() {
+        result = num1 - num2;
+    }
+
+    public void multiply() {
+        result = num1 * num2;
+    }
+
+    public void divide() {
+
+        if(num2 != 0) {
+            result = num1 / num2;
+        }
+        else {
+            result = 0;
+        }
+    }
+}
+
+--------------visual page code-------------- 
+
+<apex:page controller="CalculatorController">
+
+<html>
+
+<head>
+
+    <style>
+
+        body{
+            background:#f4f4f4;
+            font-family:Arial;
+        }
+
+        .container{
+            width:350px;
+            margin:100px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0px 0px 10px gray;
+            text-align:center;
+        }
+
+        .title{
+            font-size:30px;
+            color:#0070d2;
+            margin-bottom:20px;
+            font-weight:bold;
+        }
+
+        .labelText{
+            font-size:18px;
+            font-weight:bold;
+        }
+
+        .inputBox{
+            width:90%;
+            padding:10px;
+            margin-top:5px;
+            border-radius:5px;
+            border:1px solid #ccc;
+            font-size:16px;
+        }
+
+        .btn{
+            background:#0070d2;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            margin:5px;
+            border-radius:5px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        .btn:hover{
+            background:#005fb2;
+        }
+
+        .result{
+            margin-top:20px;
+            font-size:24px;
+            color:green;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <apex:form>
+
+        <div class="container">
+
+            <div class="title">
+                Calculator
+            </div>
+
+            <div class="labelText">
+                Number 1
+            </div>
+
+            <apex:inputText value="{!num1}" styleClass="inputBox"/>
+
+            <br/><br/>
+
+            <div class="labelText">
+                Number 2
+            </div>
+
+            <apex:inputText value="{!num2}" styleClass="inputBox"/>
+
+            <br/><br/>
+
+            <apex:commandButton value="Add"
+                                action="{!add}"
+                                styleClass="btn"/>
+
+            <apex:commandButton value="Subtract"
+                                action="{!subtract}"
+                                styleClass="btn"/>
+
+            <apex:commandButton value="Multiply"
+                                action="{!multiply}"
+                                styleClass="btn"/>
+
+            <apex:commandButton value="Divide"
+                                action="{!divide}"
+                                styleClass="btn"/>
+
+            <div class="result">
+                Result = {!result}
+            </div>
+
+        </div>
+
+    </apex:form>
+
+</body>
+
+</html>
+
+</apex:page>
+
+
+
+---------static code--------
+
+...........CalculatorApp............
+
+public class CalculatorApp {
+
+    // Static method: Addition
+    public static Decimal addNumbers(Decimal a, Decimal b) {
+        return a + b;
+    }
+
+    // Static method: Subtraction
+    public static Decimal subtractNumbers(Decimal a, Decimal b) {
+        return a - b;
+    }
+
+    // Static method: Multiplication
+    public static Decimal multiplyNumbers(Decimal a, Decimal b) {
+        return a * b;
+    }
+
+    // Static method: Division
+    public static Decimal divideNumbers(Decimal a, Decimal b) {
+
+        if(b != 0) {
+            return a / b;
+        } else {
+            return 0;
+        }
+    }
+}
+
+
+---------------anonymous window...........
+Decimal num1 = 10;
+Decimal num2 = 5;
+
+System.debug('Addition = ' + CalculatorApp.addNumbers(num1, num2));
+System.debug('Subtraction = ' + CalculatorApp.subtractNumbers(num1, num2));
+System.debug('Multiplication = ' + CalculatorApp.multiplyNumbers(num1, num2));
+System.debug('Division = ' + CalculatorApp.divideNumbers(num1, num2));
+
+
+
