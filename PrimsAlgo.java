@@ -1,0 +1,129 @@
+import java.util.Scanner;
+
+public class PrimsAlgo {
+
+    static int findMinVertex(int key[], boolean visited[], int v) {
+
+        int minVertex = -1;
+
+        for (int i = 0; i < v; i++) {
+
+            if (!visited[i] &&
+                (minVertex == -1 || key[i] < key[minVertex])) {
+
+                minVertex = i;
+            }
+        }
+        return minVertex;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of vertices: ");
+        int v = sc.nextInt();
+
+        char vertex[] = new char[v];
+
+        for (int i = 0; i < v; i++) {
+            vertex[i] = (char) ('A' + i);
+        }
+
+        int graph[][] = new int[v][v];
+
+        System.out.println("\nEnter Adjacency Matrix:");
+
+        System.out.print("   ");
+        for (int i = 0; i < v; i++) {
+            System.out.print(vertex[i] + "  ");
+        }
+        System.out.println();
+
+        // Input + validation
+        for (int i = 0; i < v; i++) {
+
+            System.out.print(vertex[i] + "  ");
+
+            for (int j = 0; j < v; j++) {
+
+                graph[i][j] = sc.nextInt();
+
+                //  Negative weight check
+                if (graph[i][j] < 0) {
+                    System.out.println("\n Error: Negative weights not allowed in Prim's Algorithm!");
+                    return;
+                }
+            }
+        }
+
+        //  Symmetry check
+        for (int i = 0; i < v; i++) {
+            for (int j = 0; j < v; j++) {
+                if (graph[i][j] != graph[j][i]) {
+                    System.out.println("\n Error: Graph must be undirected (symmetric matrix)!");
+                    return;
+                }
+            }
+        }
+
+        int parent[] = new int[v];
+        int key[] = new int[v];
+        boolean visited[] = new boolean[v];
+
+        for (int i = 0; i < v; i++) {
+            key[i] = Integer.MAX_VALUE;
+            visited[i] = false;
+        }
+
+        key[0] = 0;
+        parent[0] = -1;
+
+        // Prim's logic
+        for (int i = 0; i < v - 1; i++) {
+
+            int minVertex = findMinVertex(key, visited, v);
+
+            visited[minVertex] = true;
+
+            for (int j = 0; j < v; j++) {
+
+                if (graph[minVertex][j] != 0 &&
+                    !visited[j] &&
+                    graph[minVertex][j] < key[j]) {
+
+                    key[j] = graph[minVertex][j];
+                    parent[j] = minVertex;
+                }
+            }
+        }
+
+        System.out.println("\nMinimum Spanning Tree:\n");
+
+        int totalWeight = 0;
+
+        for (int i = 1; i < v; i++) {
+
+            System.out.println(
+                vertex[parent[i]] + " - " +
+                vertex[i] + " = " +
+                graph[i][parent[i]]
+            );
+
+            totalWeight += graph[i][parent[i]];
+        }
+
+        System.out.println("\nTotal Weight = " + totalWeight);
+
+        sc.close();
+    }
+}
+
+
+
+
+//A  B  C  D
+A  0  4  5  8
+B  4  0  0  6
+C  5  0  0  3
+D  8  6  3  0
